@@ -436,8 +436,8 @@ function DocsPage() {
       ʦ index.tsx         → /blog/my-post
       📂 edit/
         ʦ index.tsx       → /blog/my-post/edit
-  ʦ _auth.tsx             → Pathless 레이아웃
   📂 _auth/
+      ʦ route.tsx         → Pathless 레이아웃
     📂 login/
       ʦ index.tsx         → /login
     📂 signup/
