@@ -12,8 +12,10 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as AboutRouteRouteImport } from './routes/about/route'
 import { Route as AuthRouteRouteImport } from './routes/_auth/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BlogIndexRouteImport } from './routes/blog/index'
 import { Route as AboutIndexRouteImport } from './routes/about/index'
 import { Route as DocsSplatRouteImport } from './routes/docs/$'
+import { Route as BlogPostIdIndexRouteImport } from './routes/blog/$postId/index'
 import { Route as AuthLoginIndexRouteImport } from './routes/_auth/login/index'
 
 const AboutRouteRoute = AboutRouteRouteImport.update({
@@ -30,6 +32,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlogIndexRoute = BlogIndexRouteImport.update({
+  id: '/blog/',
+  path: '/blog/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AboutIndexRoute = AboutIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -38,6 +45,11 @@ const AboutIndexRoute = AboutIndexRouteImport.update({
 const DocsSplatRoute = DocsSplatRouteImport.update({
   id: '/docs/$',
   path: '/docs/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogPostIdIndexRoute = BlogPostIdIndexRouteImport.update({
+  id: '/blog/$postId/',
+  path: '/blog/$postId/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthLoginIndexRoute = AuthLoginIndexRouteImport.update({
@@ -51,13 +63,17 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRouteRouteWithChildren
   '/docs/$': typeof DocsSplatRoute
   '/about/': typeof AboutIndexRoute
+  '/blog': typeof BlogIndexRoute
   '/login': typeof AuthLoginIndexRoute
+  '/blog/$postId': typeof BlogPostIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/docs/$': typeof DocsSplatRoute
   '/about': typeof AboutIndexRoute
+  '/blog': typeof BlogIndexRoute
   '/login': typeof AuthLoginIndexRoute
+  '/blog/$postId': typeof BlogPostIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -66,13 +82,22 @@ export interface FileRoutesById {
   '/about': typeof AboutRouteRouteWithChildren
   '/docs/$': typeof DocsSplatRoute
   '/about/': typeof AboutIndexRoute
+  '/blog/': typeof BlogIndexRoute
   '/_auth/login/': typeof AuthLoginIndexRoute
+  '/blog/$postId/': typeof BlogPostIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/docs/$' | '/about/' | '/login'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/docs/$'
+    | '/about/'
+    | '/blog'
+    | '/login'
+    | '/blog/$postId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/docs/$' | '/about' | '/login'
+  to: '/' | '/docs/$' | '/about' | '/blog' | '/login' | '/blog/$postId'
   id:
     | '__root__'
     | '/'
@@ -80,7 +105,9 @@ export interface FileRouteTypes {
     | '/about'
     | '/docs/$'
     | '/about/'
+    | '/blog/'
     | '/_auth/login/'
+    | '/blog/$postId/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -88,6 +115,8 @@ export interface RootRouteChildren {
   AuthRouteRoute: typeof AuthRouteRouteWithChildren
   AboutRouteRoute: typeof AboutRouteRouteWithChildren
   DocsSplatRoute: typeof DocsSplatRoute
+  BlogIndexRoute: typeof BlogIndexRoute
+  BlogPostIdIndexRoute: typeof BlogPostIdIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -113,6 +142,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blog/': {
+      id: '/blog/'
+      path: '/blog'
+      fullPath: '/blog'
+      preLoaderRoute: typeof BlogIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/about/': {
       id: '/about/'
       path: '/'
@@ -125,6 +161,13 @@ declare module '@tanstack/react-router' {
       path: '/docs/$'
       fullPath: '/docs/$'
       preLoaderRoute: typeof DocsSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog/$postId/': {
+      id: '/blog/$postId/'
+      path: '/blog/$postId'
+      fullPath: '/blog/$postId'
+      preLoaderRoute: typeof BlogPostIdIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_auth/login/': {
@@ -166,6 +209,8 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRouteRoute: AuthRouteRouteWithChildren,
   AboutRouteRoute: AboutRouteRouteWithChildren,
   DocsSplatRoute: DocsSplatRoute,
+  BlogIndexRoute: BlogIndexRoute,
+  BlogPostIdIndexRoute: BlogPostIdIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

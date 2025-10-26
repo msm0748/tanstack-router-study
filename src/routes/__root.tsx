@@ -23,6 +23,9 @@ const RootLayout = () => (
       <Link asChild bg="purple.500">
         <TanStackLink to="/login">Login</TanStackLink>
       </Link>
+      <Link asChild bg="orange.500">
+        <TanStackLink to="/blog">Blog</TanStackLink>
+      </Link>
     </div>
     <hr />
     <Outlet />
